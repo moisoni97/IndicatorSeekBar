@@ -3,17 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.warkiz.indicatorseekbar.MainActivity">
+    tools:context="com.warkiz.indicatorseekbar.MainActivity"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
-        android:id="@+id/java_build"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            style="@style/title_text_style"
-            android:text="Build by java code" />
+        <LinearLayout
+            android:id="@+id/java_build"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/title_text_style"
+                android:text="Build by Java code" />
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/source_code_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

@@ -6,98 +6,93 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
-import android.support.annotation.ArrayRes;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.view.View;
 
-/**
- * created by zhuangguangquan on 2018/6/3
- * <p>
- * https://github.com/warkiz/IndicatorSeekBar
- * <p>
- * Donation/打赏:
- * If this library is helpful to you ,you can give me a donation by:
- *
- * @see <a href="https://www.paypal.me/BuyMeACupOfTeaThx">ZhuanGuangQuan's Paypal</a>, or
- * @see <a href="https://github.com/warkiz/IndicatorSeekBar/blob/master/app/src/main/res/mipmap-xxhdpi/wechat_pay.png?raw=true">微信支付</a>, or
- * @see <a href="https://github.com/warkiz/IndicatorSeekBar/blob/master/app/src/main/res/mipmap-xxhdpi/alipay.png?raw=true">支付宝</a>
- * <p>
- */
+import androidx.annotation.ArrayRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 
 public class Builder {
+
     final Context context;
-    //seek bar
+
     float max = 100;
     float min = 0;
     float progress = 0;
+
     boolean progressValueFloat = false;
     boolean seekSmoothly = false;
     boolean r2l = false;
     boolean userSeekable = true;
     boolean onlyThumbDraggable = false;
     boolean clearPadding = false;
-    //indicator
+
     int showIndicatorType = IndicatorType.ROUNDED_RECTANGLE;
     int indicatorColor = Color.parseColor("#FF4081");
     int indicatorTextColor = Color.parseColor("#FFFFFF");
-    int indicatorTextSize = 0;
+    int indicatorTextSize;
+
     View indicatorContentView = null;
     View indicatorTopContentView = null;
-    //track
-    int trackBackgroundSize = 0;
+
+    int trackBackgroundSize;
     int trackBackgroundColor = Color.parseColor("#D7D7D7");
-    int trackProgressSize = 0;
+    int trackProgressSize;
     int trackProgressColor = Color.parseColor("#FF4081");
+
     boolean trackRoundedCorners = false;
-    //thumbText
+
     int thumbTextColor = Color.parseColor("#FF4081");
+
     boolean showThumbText = false;
-    //thumb
-    int thumbSize = 0;
+
+    int thumbSize;
     int thumbColor = Color.parseColor("#FF4081");
+
     ColorStateList thumbColorStateList = null;
+
     Drawable thumbDrawable = null;
-    //tickTexts
+
     boolean showTickText;
-    int tickTextsColor = Color.parseColor("#FF4081");
-    int tickTextsSize = 0;
-    String[] tickTextsCustomArray = null;
-    Typeface tickTextsTypeFace = Typeface.DEFAULT;
-    ColorStateList tickTextsColorStateList = null;
-    //tickMarks
+
+    int tickTextColor = Color.parseColor("#FF4081");
+    int tickTextSize;
+
+    String[] tickTextCustomArray = null;
+
+    Typeface tickTextTypeFace = Typeface.DEFAULT;
+
+    ColorStateList tickTextColorStateList = null;
+
     int tickCount = 0;
-    int showTickMarksType = TickMarkType.NONE;
-    int tickMarksColor = Color.parseColor("#FF4081");
-    int tickMarksSize = 0;
-    Drawable tickMarksDrawable = null;
-    boolean tickMarksEndsHide = false;
-    boolean tickMarksSweptHide = false;
-    ColorStateList tickMarksColorStateList = null;
+    int showTickMarkType = TickMarkType.NONE;
+    int tickMarkColor = Color.parseColor("#FF4081");
+    int tickMarkSize;
+
+    Drawable tickMarkDrawable = null;
+
+    boolean tickMarkEndsHide = false;
+    boolean tickMarkSweptHide = false;
+
+    ColorStateList tickMarkColorStateList = null;
 
     Builder(Context context) {
         this.context = context;
         this.indicatorTextSize = SizeUtils.sp2px(context, 14);
         this.trackBackgroundSize = SizeUtils.dp2px(context, 2);
         this.trackProgressSize = SizeUtils.dp2px(context, 2);
-        this.tickMarksSize = SizeUtils.dp2px(context, 10);
-        this.tickTextsSize = SizeUtils.sp2px(context, 13);
+        this.tickMarkSize = SizeUtils.dp2px(context, 10);
+        this.tickTextSize = SizeUtils.sp2px(context, 13);
         this.thumbSize = SizeUtils.dp2px(context, 14);
     }
 
-    /**
-     * call this to new an IndicatorSeekBar
-     *
-     * @return IndicatorSeekBar
-     */
     public IndicatorSeekBar build() {
         return new IndicatorSeekBar(this);
     }
 
     /**
-     * Set the upper limit of this seek bar's range.
+     * Set the upper limit of the SeekBar range
      *
      * @param max the max range
      * @return Builder
@@ -108,7 +103,7 @@ public class Builder {
     }
 
     /**
-     * Set the  lower limit of this seek bar's range.
+     * Set the lower limit of the SeekBar range
      *
      * @param min the min range
      * @return Builder
@@ -119,9 +114,9 @@ public class Builder {
     }
 
     /**
-     * Sets the current progress to the specified value.
+     * Set the current progress to the specified value
      *
-     * @param progress the current level of seek bar
+     * @param progress the current level of SeekBar
      * @return Builder
      */
     public Builder progress(float progress) {
@@ -130,9 +125,9 @@ public class Builder {
     }
 
     /**
-     * make the progress in float type. default in int type.
+     * Set the progress in float type
      *
-     * @param isFloatProgress true for float progress,default false.
+     * @param isFloatProgress true for float progress. Default int type
      * @return Builder
      */
     public Builder progressValueFloat(boolean isFloatProgress) {
@@ -141,9 +136,9 @@ public class Builder {
     }
 
     /**
-     * seek continuously or discrete
+     * Seek continuously or discrete
      *
-     * @param seekSmoothly true for seek continuously ignore having tickMarks.
+     * @param seekSmoothly true for seek continuously ignoring tick marks
      * @return Builder
      */
     public Builder seekSmoothly(boolean seekSmoothly) {
@@ -152,9 +147,9 @@ public class Builder {
     }
 
     /**
-     * right to left,compat local problem.
+     * Right to left support
      *
-     * @param r2l true for local which read text from right to left
+     * @param r2l true to enable right to left support
      * @return Builder
      */
     public Builder r2l(boolean r2l) {
@@ -163,9 +158,9 @@ public class Builder {
     }
 
     /**
-     * seek bar has a default padding left and right(16 dp) , call this method to set both to zero.
+     * SeekBar has a default padding on left and right (16dp size)
      *
-     * @param clearPadding true to clear the default padding, false to keep.
+     * @param clearPadding true to clear the default padding
      * @return Builder
      */
     public Builder clearPadding(boolean clearPadding) {
@@ -174,9 +169,9 @@ public class Builder {
     }
 
     /**
-     * prevent user from touching to seek or not
+     * Prevent user to seek
      *
-     * @param userSeekable true user can seek.
+     * @param userSeekable true user can seek
      * @return Builder
      */
     public Builder userSeekable(boolean userSeekable) {
@@ -185,9 +180,9 @@ public class Builder {
     }
 
     /**
-     * user change the thumb's location by touching thumb,touching track will not worked.
+     * User can change the thumb location by touching the thumb. Touching the track won't work
      *
-     * @param onlyThumbDraggable true for seeking only by drag thumb. default false;
+     * @param onlyThumbDraggable true for seeking only by dragging the thumb. Default false
      * @return Builder
      */
     public Builder onlyThumbDraggable(boolean onlyThumbDraggable) {
@@ -196,7 +191,7 @@ public class Builder {
     }
 
     /**
-     * call this method to show different shape of indicator.
+     * To show different shape of indicator
      *
      * @param showIndicatorType see{@link IndicatorType}
      *                          IndicatorType.NONE;
@@ -212,7 +207,7 @@ public class Builder {
     }
 
     /**
-     * set the seek bar's indicator's color. have no influence on custom indicator.
+     * Set the SeekBar indicator color. Have no influence on custom indicator
      *
      * @param indicatorColor colorInt
      * @return Builder
@@ -223,9 +218,9 @@ public class Builder {
     }
 
     /**
-     * set the color for indicator text . have no influence on custom tickDrawable.
+     * Set the color for indicator text. Have no influence on custom tick drawable
      *
-     * @param indicatorTextColor ColorInt
+     * @param indicatorTextColor colorInt
      * @return Builder
      */
     public Builder indicatorTextColor(@ColorInt int indicatorTextColor) {
@@ -234,9 +229,9 @@ public class Builder {
     }
 
     /**
-     * change the size for indicator text.have no influence on custom indicator.
+     * Change the size for indicator text. Have no influence on custom indicator
      *
-     * @param indicatorTextSize The scaled pixel size.
+     * @param indicatorTextSize the scaled pixel size.
      * @return Builder
      */
     public Builder indicatorTextSize(int indicatorTextSize) {
@@ -245,7 +240,7 @@ public class Builder {
     }
 
     /**
-     * set the seek bar's indicator's custom indicator view. only effect on custom indicator type.
+     * Set the SeekBar custom indicator view. Have effect only on custom indicator type
      *
      * @param indicatorContentView the custom indicator view
      * @return Builder
@@ -256,9 +251,9 @@ public class Builder {
     }
 
     /**
-     * set the seek bar's indicator's custom indicator layout identify. only effect on custom indicator type.
+     * Set the SeekBar custom indicator layout identifier. Have effect only on custom indicator type
      *
-     * @param layoutId the custom indicator layout identify
+     * @param layoutId the custom indicator layout identifier
      * @return Builder
      */
     public Builder indicatorContentViewLayoutId(@LayoutRes int layoutId) {
@@ -267,8 +262,7 @@ public class Builder {
     }
 
     /**
-     * set the seek bar's indicator's custom top content view.
-     * no effect on custom and circular_bubble indicator type.
+     * Set the SeekBar custom top content view. Have no effect on custom and circular_bubble indicator type
      *
      * @param topContentView the custom indicator top content view
      * @return Builder
@@ -279,10 +273,9 @@ public class Builder {
     }
 
     /**
-     * set the seek bar's indicator's custom top content view layout identify.
-     * no effect on custom and circular_bubble indicator type.
+     * Set the SeekBar custom top content view layout identifier. Have no effect on custom and circular_bubble indicator type
      *
-     * @param layoutId the custom view for indicator top content layout identify.
+     * @param layoutId the custom view for indicator top content layout identifier
      * @return Builder
      */
     public Builder indicatorTopContentViewLayoutId(@LayoutRes int layoutId) {
@@ -292,9 +285,9 @@ public class Builder {
 
 
     /**
-     * set the seek bar's background track's Stroke Width
+     * Set the SeekBar background track stroke width
      *
-     * @param trackBackgroundSize The dp size.
+     * @param trackBackgroundSize the dp size
      * @return Builder
      */
     public Builder trackBackgroundSize(int trackBackgroundSize) {
@@ -303,7 +296,7 @@ public class Builder {
     }
 
     /**
-     * set the seek bar's background track's color.
+     * Set the SeekBar background track color
      *
      * @param trackBackgroundColor colorInt
      * @return Builder
@@ -314,9 +307,9 @@ public class Builder {
     }
 
     /**
-     * set the seek bar's progress track's Stroke Width
+     * Set the SeekBar progress track stroke width
      *
-     * @param trackProgressSize The dp size.
+     * @param trackProgressSize the dp size
      * @return Builder
      */
     public Builder trackProgressSize(int trackProgressSize) {
@@ -325,7 +318,7 @@ public class Builder {
     }
 
     /**
-     * set the seek bar's progress track's color.
+     * Set the SeekBar progress track color
      *
      * @param trackProgressColor colorInt
      * @return Builder
@@ -336,9 +329,9 @@ public class Builder {
     }
 
     /**
-     * call this method to show the seek bar's ends to square corners.default rounded corners.
+     * To show the SeekBar ends to square corners. Default rounded corners
      *
-     * @param trackRoundedCorners false to show square corners.
+     * @param trackRoundedCorners false to show square corners
      * @return Builder
      */
     public Builder trackRoundedCorners(boolean trackRoundedCorners) {
@@ -347,7 +340,7 @@ public class Builder {
     }
 
     /**
-     * set the seek bar's thumb's text color.
+     * Set the SeekBar thumb text color
      *
      * @param thumbTextColor colorInt
      * @return Builder
@@ -358,9 +351,9 @@ public class Builder {
     }
 
     /**
-     * call this method to show the text below thumb or not
+     * To show the text below thumb
      *
-     * @param showThumbText show the text below thumb or not
+     * @param showThumbText show the text below thumb
      * @return Builder
      */
     public Builder showThumbText(boolean showThumbText) {
@@ -369,7 +362,7 @@ public class Builder {
     }
 
     /**
-     * set the seek bar's thumb's color.
+     * Set the SeekBar thumb color
      *
      * @param thumbColor colorInt
      * @return Builder
@@ -380,26 +373,20 @@ public class Builder {
     }
 
     /**
-     * set the seek bar's thumb's selector color.
+     * Set the SeekBar thumb selector color
      *
      * @param thumbColorStateList color selector
      * @return Builder
-     * selector format like:
      */
-    //<?xml version="1.0" encoding="utf-8"?>
-    //<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    //<item android:color="@color/colorAccent" android:state_pressed="true" />  <!--this color is for thumb which is at pressing status-->
-    //<item android:color="@color/color_blue" />                                <!--for thumb which is at normal status-->
-    //</selector>
     public Builder thumbColorStateList(@NonNull ColorStateList thumbColorStateList) {
         this.thumbColorStateList = thumbColorStateList;
         return this;
     }
 
     /**
-     * set the seek bar's thumb's Width.will be limited in 30dp.
+     * Set the SeekBar thumb width. Will be limited in 30dp
      *
-     * @param thumbSize The dp size.
+     * @param thumbSize the dp size
      * @return Builder
      */
     public Builder thumbSize(int thumbSize) {
@@ -408,9 +395,9 @@ public class Builder {
     }
 
     /**
-     * set a new thumb drawable.
+     * Set a new thumb drawable
      *
-     * @param thumbDrawable the drawable for thumb.
+     * @param thumbDrawable the drawable for thumb
      * @return Builder
      */
     public Builder thumbDrawable(@NonNull Drawable thumbDrawable) {
@@ -419,18 +406,11 @@ public class Builder {
     }
 
     /**
-     * call this method to custom the thumb showing drawable by selector Drawable.
+     * To custom the thumb showing drawable by selector drawable
      *
-     * @param thumbStateListDrawable the drawable show as Thumb.
+     * @param thumbStateListDrawable the drawable show as thumb
      * @return Builder
-     * <p>
-     * selector format:
      */
-    //<?xml version="1.0" encoding="utf-8"?>
-    //<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    //<item android:drawable="Your drawableA" android:state_pressed="true" />  <!--this drawable is for thumb when pressing-->
-    //<item android:drawable="Your drawableB" />  < !--for thumb when normal-->
-    //</selector>
     public Builder thumbDrawable(@NonNull StateListDrawable thumbStateListDrawable) {
         this.thumbDrawable = thumbStateListDrawable;
         return this;
@@ -438,95 +418,87 @@ public class Builder {
 
 
     /**
-     * show the tick texts or not
+     * Show the tick text
      *
-     * @param showTickText show the text below track or not.
+     * @param showTickText show the text below track
      * @return Builder
      */
-    public Builder showTickTexts(boolean showTickText) {
+    public Builder showTickText(boolean showTickText) {
         this.showTickText = showTickText;
         return this;
     }
 
     /**
-     * set the color for text below/above seek bar's tickText.
+     * Set the color for text below/above SeekBar tick text
      *
-     * @param tickTextsColor ColorInt
+     * @param tickTextColor colorInt
      * @return Builder
      */
-    public Builder tickTextsColor(@ColorInt int tickTextsColor) {
-        this.tickTextsColor = tickTextsColor;
+    public Builder tickTextColor(@ColorInt int tickTextColor) {
+        this.tickTextColor = tickTextColor;
         return this;
     }
 
     /**
-     * set the selector color for text below/above seek bar's tickText.
+     * Set the selector color for text below/above SeekBar tick text
      *
-     * @param tickTextsColorStateList ColorInt
+     * @param tickTextColorStateList colorInt
      * @return Builder
-     * selector format like:
      */
-    //<?xml version="1.0" encoding="utf-8"?>
-    //<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    //<item android:color="@color/colorAccent" android:state_selected="true" />  <!--this color is for texts those are at left side of thumb-->
-    //<item android:color="@color/color_blue" android:state_hovered="true" />     <!--for thumb below text-->
-    //<item android:color="@color/color_gray" />                                 <!--for texts those are at right side of thumb-->
-    //</selector>
-    public Builder tickTextsColorStateList(@NonNull ColorStateList tickTextsColorStateList) {
-        this.tickTextsColorStateList = tickTextsColorStateList;
+    public Builder tickTextColorStateList(@NonNull ColorStateList tickTextColorStateList) {
+        this.tickTextColorStateList = tickTextColorStateList;
         return this;
     }
 
     /**
-     * set the size for tickText which below/above seek bar's tick .
+     * Set the size for tick text below/above SeekBar
      *
-     * @param tickTextsSize The scaled pixel size.
+     * @param tickTextSize the scaled pixel size
      * @return Builder
      */
-    public Builder tickTextsSize(int tickTextsSize) {
-        this.tickTextsSize = SizeUtils.sp2px(context, tickTextsSize);
+    public Builder tickTextSize(int tickTextSize) {
+        this.tickTextSize = SizeUtils.sp2px(context, tickTextSize);
         return this;
     }
 
     /**
-     * call this method to replace the seek bar's tickMarks' below/above tick texts.
+     * To replace the SeekBar tick mark below/above tick text
      *
-     * @param tickTextsArray the length should same as tickCount.
+     * @param tickTextArray the length should same as tick count
      * @return Builder
      */
-    public Builder tickTextsArray(String[] tickTextsArray) {
-        this.tickTextsCustomArray = tickTextsArray;
+    public Builder tickTextArray(String[] tickTextArray) {
+        this.tickTextCustomArray = tickTextArray;
         return this;
     }
 
 
     /**
-     * call this method to replace the seek bar's tickMarks' below/above tick texts.
+     * To replace the SeekBar tick mark below/above tick text
      *
-     * @param tickTextsArray the length should same as tickNum.
+     * @param tickTextArray the length should same as tick count
      * @return Builder
      */
-    public Builder tickTextsArray(@ArrayRes int tickTextsArray) {
-        this.tickTextsCustomArray = context.getResources().getStringArray(tickTextsArray);
+    public Builder tickTextArray(@ArrayRes int tickTextArray) {
+        this.tickTextCustomArray = context.getResources().getStringArray(tickTextArray);
         return this;
     }
 
     /**
-     * set the tick text's / thumb text textTypeface .
+     * Set the tick/thumb text typeface
      *
-     * @param tickTextsTypeFace The text textTypeface.
+     * @param tickTextTypeFace the text typeface
      * @return Builder
      */
-    public Builder tickTextsTypeFace(Typeface tickTextsTypeFace) {
-        this.tickTextsTypeFace = tickTextsTypeFace;
+    public Builder tickTextTypeFace(Typeface tickTextTypeFace) {
+        this.tickTextTypeFace = tickTextTypeFace;
         return this;
     }
 
     /**
-     * set the tickMarks number.
+     * Set the tick mark number
      *
-     * @param tickCount the tickMarks count show on seek bar.
-     *                  if you want the seek bar's block size is N , this tickCount should be N+1.
+     * @param tickCount the tick mark count show on SeekBar
      * @return Builder
      */
     public Builder tickCount(int tickCount) {
@@ -535,107 +507,94 @@ public class Builder {
     }
 
     /**
-     * call this method to show different tickMark shape.
+     * To show different tick mark shape
      *
-     * @param tickMarksType see{@link TickMarkType}
-     *                      TickMarkType.NONE;
-     *                      TickMarkType.OVAL;
-     *                      TickMarkType.SQUARE;
-     *                      TickMarkType.DIVIDER;
+     * @param tickMarkType see{@link TickMarkType}
+     *                     TickMarkType.NONE;
+     *                     TickMarkType.OVAL;
+     *                     TickMarkType.SQUARE;
+     *                     TickMarkType.DIVIDER;
      * @return Builder
      */
-    public Builder showTickMarksType(int tickMarksType) {
-        this.showTickMarksType = tickMarksType;
+    public Builder showTickMarkType(int tickMarkType) {
+        this.showTickMarkType = tickMarkType;
         return this;
     }
 
     /**
-     * set the seek bar's tick's color.
+     * Set the SeekBar tick color
      *
-     * @param tickMarksColor colorInt
+     * @param tickMarkColor colorInt
      * @return Builder
      */
-    public Builder tickMarksColor(@ColorInt int tickMarksColor) {
-        this.tickMarksColor = tickMarksColor;
+    public Builder tickMarkColor(@ColorInt int tickMarkColor) {
+        this.tickMarkColor = tickMarkColor;
         return this;
     }
 
     /**
-     * set the seek bar's tick's color.
+     * Set the SeekBar tick color
      *
-     * @param tickMarksColorStateList colorInt
+     * @param tickMarkColorStateList colorInt
      * @return Builder
-     * selector format like:
      */
-    //<?xml version="1.0" encoding="utf-8"?>
-    //<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    //<item android:color="@color/colorAccent" android:state_selected="true" />  <!--this color is for marks those are at left side of thumb-->
-    //<item android:color="@color/color_gray" />                                 <!--for marks those are at right side of thumb-->
-    //</selector>
-    public Builder tickMarksColor(@NonNull ColorStateList tickMarksColorStateList) {
-        this.tickMarksColorStateList = tickMarksColorStateList;
+    public Builder tickMarkColor(@NonNull ColorStateList tickMarkColorStateList) {
+        this.tickMarkColorStateList = tickMarkColorStateList;
         return this;
     }
 
     /**
-     * set the seek bar's tick width , if tick type is divider, call this method will be not worked(tick type is divider,has a regular value 2dp).
+     * Set the SeekBar tick width. If tick type is divider, this method won't work (divider has a regular value 2dp)
      *
-     * @param tickMarksSize the dp size.
+     * @param tickMarkSize the dp size
      * @return Builder
      */
-    public Builder tickMarksSize(int tickMarksSize) {
-        this.tickMarksSize = SizeUtils.dp2px(context, tickMarksSize);
+    public Builder tickMarkSize(int tickMarkSize) {
+        this.tickMarkSize = SizeUtils.dp2px(context, tickMarkSize);
         return this;
     }
 
     /**
-     * call this method to custom the tick showing drawable.
+     * To custom the tick showing drawable
      *
-     * @param tickMarksDrawable the drawable show as tickMark.
+     * @param tickMarkDrawable the drawable show as tick mark
      * @return Builder
      */
-    public Builder tickMarksDrawable(@NonNull Drawable tickMarksDrawable) {
-        this.tickMarksDrawable = tickMarksDrawable;
+    public Builder tickMarkDrawable(@NonNull Drawable tickMarkDrawable) {
+        this.tickMarkDrawable = tickMarkDrawable;
         return this;
     }
 
     /**
-     * call this method to custom the tick showing drawable by selector.
+     * To custom the tick showing drawable by selector
      *
-     * @param tickMarksStateListDrawable the StateListDrawable show as tickMark.
+     * @param tickMarkStateListDrawable the StateListDrawable show as tick mark
      * @return Builder
-     * selector format like :
      */
-    //<?xml version="1.0" encoding="utf-8"?>
-    //<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    //<item android:drawable="@mipmap/ic_launcher_round" android:state_pressed="true" />  <!--this drawable is for thumb when pressing-->
-    //<item android:drawable="@mipmap/ic_launcher" />  <!--for thumb when normal-->
-    //</selector>
-    public Builder tickMarksDrawable(@NonNull StateListDrawable tickMarksStateListDrawable) {
-        this.tickMarksDrawable = tickMarksStateListDrawable;
+    public Builder tickMarkDrawable(@NonNull StateListDrawable tickMarkStateListDrawable) {
+        this.tickMarkDrawable = tickMarkStateListDrawable;
         return this;
     }
 
     /**
-     * call this method to hide the tickMarks which show in the both ends sides of seek bar.
+     * To hide the tick mark which show in the both end sides of SeekBar
      *
-     * @param tickMarksEndsHide true for hide.
+     * @param tickMarkEndsHide true for hide
      * @return Builder
      */
-    public Builder tickMarksEndsHide(boolean tickMarksEndsHide) {
-        this.tickMarksEndsHide = tickMarksEndsHide;
+    public Builder tickMarkEndsHide(boolean tickMarkEndsHide) {
+        this.tickMarkEndsHide = tickMarkEndsHide;
         return this;
     }
 
     /**
-     * call this method to hide the tickMarks on seekBar's thumb left;
+     * To hide the tick mark on SeekBar thumb left
      *
-     * @param tickMarksSweptHide true for hide.
+     * @param tickMarkSweptHide true for hide
      * @return Builder
      */
-    public Builder tickMarksSweptHide(boolean tickMarksSweptHide) {
-        this.tickMarksSweptHide = tickMarksSweptHide;
+    public Builder tickMarkSweptHide(boolean tickMarkSweptHide) {
+        this.tickMarkSweptHide = tickMarkSweptHide;
         return this;
     }
-
 }

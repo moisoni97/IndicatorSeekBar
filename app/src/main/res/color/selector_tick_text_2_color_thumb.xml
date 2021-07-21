@@ -1,0 +1,8 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--color for tick text at the left side of the thumb-->
+    <item android:color="#555555" android:state_selected="true" />
+    <!--color for tick text under the thumb-->
+    <item android:color="#FF4081" android:state_hovered="true" />
+    <!--color for tick text at the right side of the thumb-->
+    <item android:color="#555555" />
+</selector>

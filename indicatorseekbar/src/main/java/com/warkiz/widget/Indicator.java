@@ -1,47 +1,46 @@
 package com.warkiz.widget;
 
 import android.content.Context;
+import android.graphics.Insets;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.view.WindowManager;
+import android.view.WindowMetrics;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-/**
- * created by zhuangguangquan on 2017/9/9
- * <p>
- * https://github.com/warkiz/IndicatorSeekBar
- * <p>
- * Donation/打赏:
- * If this library is helpful to you ,you can give me a donation by:
- *
- * @see <a href="https://www.paypal.me/BuyMeACupOfTeaThx">ZhuanGuangQuan's Paypal</a>, or
- * @see <a href="https://github.com/warkiz/IndicatorSeekBar/blob/master/app/src/main/res/mipmap-xxhdpi/wechat_pay.png?raw=true">微信支付</a>, or
- * @see <a href="https://github.com/warkiz/IndicatorSeekBar/blob/master/app/src/main/res/mipmap-xxhdpi/alipay.png?raw=true">支付宝</a>
- * <p>
- */
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
+
 public class Indicator {
+
+    private final Context mContext;
+
     private final int mWindowWidth;
-    private int[] mLocation = new int[2];
+    private final int[] mLocation = new int[2];
+
     private ArrowView mArrowView;
     private TextView mProgressTextView;
     private PopupWindow mIndicatorPopW;
     private LinearLayout mTopContentView;
-    private int mGap;
-    private int mIndicatorColor;
-    private Context mContext;
+
+    private final int mGap;
+    private final int mIndicatorColor;
     private int mIndicatorType;
-    private IndicatorSeekBar mSeekBar;
+
+    private final IndicatorSeekBar mSeekBar;
+    private final View mIndicatorCustomTopContentView;
     private View mIndicatorView;
     private View mIndicatorCustomView;
-    private View mIndicatorCustomTopContentView;
-    private float mIndicatorTextSize;
-    private int mIndicatorTextColor;
+
+    private final float mIndicatorTextSize;
+    private final int mIndicatorTextColor;
 
     public Indicator(Context context,
                      IndicatorSeekBar seekBar,
@@ -62,6 +61,7 @@ public class Indicator {
 
         mWindowWidth = getWindowWidth();
         mGap = SizeUtils.dp2px(mContext, 2);
+
         initIndicator();
     }
 
@@ -69,56 +69,55 @@ public class Indicator {
         if (mIndicatorType == IndicatorType.CUSTOM) {
             if (mIndicatorCustomView != null) {
                 mIndicatorView = mIndicatorCustomView;
-                //for the custom indicator view, if progress need to show when seeking ,
-                // need a TextView to show progress and this textView 's identify must be progress;
+
                 int progressTextViewId = mContext.getResources().getIdentifier("isb_progress", "id", mContext.getApplicationContext().getPackageName());
+
                 if (progressTextViewId > 0) {
                     View view = mIndicatorView.findViewById(progressTextViewId);
+
                     if (view != null) {
                         if (view instanceof TextView) {
-                            //progressText
                             mProgressTextView = (TextView) view;
                             mProgressTextView.setText(mSeekBar.getIndicatorTextString());
                             mProgressTextView.setTextSize(SizeUtils.px2sp(mContext, mIndicatorTextSize));
                             mProgressTextView.setTextColor(mIndicatorTextColor);
                         } else {
-                            throw new ClassCastException("the view identified by isb_progress in indicator custom layout can not be cast to TextView");
+                            throw new ClassCastException("The view identified by isb_progress in indicator custom layout can not be cast to TextView");
                         }
                     }
                 }
             } else {
-                throw new IllegalArgumentException("the attr：indicator_custom_layout must be set while you set the indicator type to CUSTOM.");
+                throw new IllegalArgumentException("The attr：indicator_custom_layout must be set while you set the indicator type to CUSTOM");
             }
         } else {
             if (mIndicatorType == IndicatorType.CIRCULAR_BUBBLE) {
+
                 mIndicatorView = new CircleBubbleView(mContext, mIndicatorTextSize, mIndicatorTextColor, mIndicatorColor, "1000");
                 ((CircleBubbleView) mIndicatorView).setProgress(mSeekBar.getIndicatorTextString());
             } else {
                 mIndicatorView = View.inflate(mContext, R.layout.isb_indicator, null);
-                //container
-                mTopContentView = (LinearLayout) mIndicatorView.findViewById(R.id.indicator_container);
-                //arrow
-                mArrowView = (ArrowView) mIndicatorView.findViewById(R.id.indicator_arrow);
+
+                mTopContentView = mIndicatorView.findViewById(R.id.indicator_container);
+
+                mArrowView = mIndicatorView.findViewById(R.id.indicator_arrow);
                 mArrowView.setColor(mIndicatorColor);
-                //progressText
-                mProgressTextView = (TextView) mIndicatorView.findViewById(R.id.isb_progress);
+
+                mProgressTextView = mIndicatorView.findViewById(R.id.isb_progress);
                 mProgressTextView.setText(mSeekBar.getIndicatorTextString());
                 mProgressTextView.setTextSize(SizeUtils.px2sp(mContext, mIndicatorTextSize));
                 mProgressTextView.setTextColor(mIndicatorTextColor);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    mTopContentView.setBackground(getGradientDrawable());
-                } else {
-                    mTopContentView.setBackgroundDrawable(getGradientDrawable());
-                }
-                //custom top content view
+
+                mTopContentView.setBackground(getGradientDrawable());
+
                 if (mIndicatorCustomTopContentView != null) {
-                    //for the custom indicator top content view, if progress need to show when seeking ,
-                    //need a TextView to show progress and this textView 's identify must be progress;
+
                     int progressTextViewId = mContext.getResources().getIdentifier("isb_progress", "id", mContext.getApplicationContext().getPackageName());
+
                     View topContentView = mIndicatorCustomTopContentView;
+
                     if (progressTextViewId > 0) {
                         View tv = topContentView.findViewById(progressTextViewId);
-                        if (tv != null && tv instanceof TextView) {
+                        if (tv instanceof TextView) {
                             setTopContentView(topContentView, (TextView) tv);
                         } else {
                             setTopContentView(topContentView);
@@ -126,7 +125,6 @@ public class Indicator {
                     } else {
                         setTopContentView(topContentView);
                     }
-
                 }
             }
         }
@@ -135,20 +133,49 @@ public class Indicator {
     @NonNull
     private GradientDrawable getGradientDrawable() {
         GradientDrawable tvDrawable;
+
         if (mIndicatorType == IndicatorType.ROUNDED_RECTANGLE) {
-            tvDrawable = (GradientDrawable) mContext.getResources().getDrawable(R.drawable.isb_indicator_rounded_corners);
+            tvDrawable = (GradientDrawable) AppCompatResources.getDrawable(mContext, R.drawable.isb_indicator_round);
         } else {
-            tvDrawable = (GradientDrawable) mContext.getResources().getDrawable(R.drawable.isb_indicator_square_corners);
+            tvDrawable = (GradientDrawable) AppCompatResources.getDrawable(mContext, R.drawable.isb_indicator_square);
         }
+
+        if (tvDrawable == null) {
+            tvDrawable = new GradientDrawable();
+
+            if (mIndicatorType == IndicatorType.ROUNDED_RECTANGLE) {
+                tvDrawable.setSize(SizeUtils.dp2px(mContext, 28), SizeUtils.dp2px(mContext, 16));
+                tvDrawable.setCornerRadius(SizeUtils.dp2px(mContext, 8));
+            } else {
+                tvDrawable.setSize(SizeUtils.dp2px(mContext, 24), SizeUtils.dp2px(mContext, 16));
+            }
+        }
+
+        tvDrawable.mutate();
         tvDrawable.setColor(mIndicatorColor);
+
         return tvDrawable;
     }
 
     private int getWindowWidth() {
-        WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        if (wm != null) {
-            return wm.getDefaultDisplay().getWidth();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+
+            if (windowManager != null) {
+                WindowMetrics windowMetrics = windowManager.getCurrentWindowMetrics();
+
+                Insets insets = windowMetrics.getWindowInsets()
+                        .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars());
+
+                return windowMetrics.getBounds().width() - insets.left - insets.right;
+            }
+        } else {
+            DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
+            if (metrics != null) {
+                return metrics.widthPixels;
+            }
         }
+
         return 0;
     }
 
@@ -161,10 +188,12 @@ public class Indicator {
         if (mIndicatorType == IndicatorType.CUSTOM || mIndicatorType == IndicatorType.CIRCULAR_BUBBLE) {
             return;
         }
+
         int indicatorScreenX = getIndicatorScreenX();
-        if (indicatorScreenX + touchX < mIndicatorPopW.getContentView().getMeasuredWidth() / 2) {
+
+        if (indicatorScreenX + touchX < mIndicatorPopW.getContentView().getMeasuredWidth() / 2.0f) {
             setMargin(mArrowView, -(int) (mIndicatorPopW.getContentView().getMeasuredWidth() / 2 - indicatorScreenX - touchX), -1, -1, -1);
-        } else if (mWindowWidth - indicatorScreenX - touchX < mIndicatorPopW.getContentView().getMeasuredWidth() / 2) {
+        } else if (mWindowWidth - indicatorScreenX - touchX < mIndicatorPopW.getContentView().getMeasuredWidth() / 2.0f) {
             setMargin(mArrowView, (int) (mIndicatorPopW.getContentView().getMeasuredWidth() / 2 - (mWindowWidth - indicatorScreenX - touchX)), -1, -1, -1);
         } else {
             setMargin(mArrowView, 0, 0, 0, 0);
@@ -175,6 +204,7 @@ public class Indicator {
         if (view == null) {
             return;
         }
+
         if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
             layoutParams.setMargins(left == -1 ? layoutParams.leftMargin : left, top == -1 ? layoutParams.topMargin : top, right == -1 ? layoutParams.rightMargin : right, bottom == -1 ? layoutParams.bottomMargin : bottom);
@@ -186,6 +216,7 @@ public class Indicator {
         if (mIndicatorPopW != null) {
             return;
         }
+
         if (mIndicatorType != IndicatorType.NONE && mIndicatorView != null) {
             mIndicatorView.measure(0, 0);
             mIndicatorPopW = new PopupWindow(mIndicatorView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, false);
@@ -214,15 +245,17 @@ public class Indicator {
 
 
     /**
-     * update the indicator position
+     * Update the indicator position
      *
-     * @param touchX the x location you touch without padding left.
+     * @param touchX the x location without padding left
      */
     void update(float touchX) {
         if (!mSeekBar.isEnabled() || !(mSeekBar.getVisibility() == View.VISIBLE)) {
             return;
         }
+
         refreshProgressText();
+
         if (mIndicatorPopW != null) {
             mIndicatorPopW.getContentView().measure(0, 0);
             mIndicatorPopW.update(mSeekBar, (int) (touchX - mIndicatorPopW.getContentView().getMeasuredWidth() / 2),
@@ -232,15 +265,17 @@ public class Indicator {
     }
 
     /**
-     * call this method to show the indicator.
+     * To show the indicator
      *
-     * @param touchX the x location you touch, padding left excluded.
+     * @param touchX the x location, padding left excluded
      */
     void show(float touchX) {
         if (!mSeekBar.isEnabled() || !(mSeekBar.getVisibility() == View.VISIBLE)) {
             return;
         }
+
         refreshProgressText();
+
         if (mIndicatorPopW != null) {
             mIndicatorPopW.getContentView().measure(0, 0);
             mIndicatorPopW.showAsDropDown(mSeekBar, (int) (touchX - mIndicatorPopW.getContentView().getMeasuredWidth() / 2f),
@@ -251,6 +286,7 @@ public class Indicator {
 
     void refreshProgressText() {
         String tickTextString = mSeekBar.getIndicatorTextString();
+
         if (mIndicatorView instanceof CircleBubbleView) {
             ((CircleBubbleView) mIndicatorView).setProgress(tickTextString);
         } else if (mProgressTextView != null) {
@@ -259,94 +295,91 @@ public class Indicator {
     }
 
     /**
-     * call this method hide the indicator
+     * To hide the indicator
      */
     void hide() {
         if (mIndicatorPopW == null) {
             return;
         }
+
         mIndicatorPopW.dismiss();
     }
 
+    /**
+     * Returns the state of the indicator
+     */
     boolean isShowing() {
         return mIndicatorPopW != null && mIndicatorPopW.isShowing();
     }
 
-
-    /*----------------------API START-------------------*/
-
     /**
-     * get the indicator content view.
+     * Get the indicator content view
      *
-     * @return the view which is inside indicator.
+     * @return the view which is inside indicator
      */
     public View getContentView() {
         return mIndicatorView;
     }
 
     /**
-     * call this method to replace the current indicator with a new indicator view , indicator arrow will be replace ,too.
+     * To replace the current indicator with a new indicator view, indicator arrow will be replaced too
      *
-     * @param customIndicatorView a new content view for indicator.
+     * @param customIndicatorView a new content view for indicator
      */
     public void setContentView(@NonNull View customIndicatorView) {
         this.mIndicatorType = IndicatorType.CUSTOM;
         this.mIndicatorCustomView = customIndicatorView;
+
         initIndicator();
     }
 
     /**
-     * call this method to replace the current indicator with a new indicator view, indicator arrow will be replace ,too.
+     * To replace the current indicator with a new indicator view, indicator arrow will be replaced too
      *
-     * @param customIndicatorView a new content view for indicator.
+     * @param customIndicatorView a new content view for indicator
      * @param progressTextView    this TextView will show the progress or tick text, must be found in @param customIndicatorView
      */
     public void setContentView(@NonNull View customIndicatorView, TextView progressTextView) {
         this.mProgressTextView = progressTextView;
         this.mIndicatorType = IndicatorType.CUSTOM;
         this.mIndicatorCustomView = customIndicatorView;
+
         initIndicator();
     }
 
     /**
-     * get the indicator top content view.
-     * if indicator type {@link IndicatorType} is CUSTOM or CIRCULAR_BUBBLE, call this method will get a null value.
+     * Get the indicator top content view
+     * If indicator type {@link IndicatorType} is CUSTOM or CIRCULAR_BUBBLE, this method will get a null value
      *
-     * @return the view which is inside indicator's top part, not include arrow
+     * @return the view which is inside indicator top part, without including the arrow
      */
     public View getTopContentView() {
         return mTopContentView;
     }
 
     /**
-     * set the View to the indicator top container, not influence indicator arrow ;
-     * if indicator type {@link IndicatorType} is CUSTOM or CIRCULAR_BUBBLE, call this method will be not worked.
+     * Set the view to the indicator top container
+     * If indicator type {@link IndicatorType} is CUSTOM or CIRCULAR_BUBBLE, this method won't work
      *
-     * @param topContentView the view is inside the indicator TOP part, not influence indicator arrow;
+     * @param topContentView the view is inside the indicator top part
      */
     public void setTopContentView(@NonNull View topContentView) {
         setTopContentView(topContentView, null);
     }
 
     /**
-     * set the  View to the indicator top container, and show the changing progress in indicator when seek;
-     * not influence indicator arrow;
-     * if indicator type is custom , this method will be not work.
+     * Set the view to the indicator top container and show the changing progress in indicator when seek
+     * If indicator type is CUSTOM, this method won't work
      *
-     * @param topContentView   the view is inside the indicator TOP part, not influence indicator arrow;
+     * @param topContentView   the view is inside the indicator top part
      * @param progressTextView this TextView will show the progress or tick text, must be found in @param topContentView
      */
     public void setTopContentView(@NonNull View topContentView, @Nullable TextView progressTextView) {
         this.mProgressTextView = progressTextView;
         this.mTopContentView.removeAllViews();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            topContentView.setBackground(getGradientDrawable());
-        } else {
-            topContentView.setBackgroundDrawable(getGradientDrawable());
-        }
+
+        topContentView.setBackground(getGradientDrawable());
+
         this.mTopContentView.addView(topContentView);
     }
-
-    /*----------------------API END-------------------*/
-
 }

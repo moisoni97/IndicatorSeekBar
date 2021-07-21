@@ -1,4 +1,6 @@
-# Android Indicator SeekBar Library
+# Android Indicator SeekBar Library [![API](https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=17) [![JitCI](https://jitci.com/gh/moisoni97/IndicatorSeekBar/svg)](https://jitci.com/gh/moisoni97/IndicatorSeekBar) [![JitPack](https://jitpack.io/v/moisoni97/IndicatorSeekBar.svg)](https://jitpack.io/#moisoni97/IndicatorSeekBar)
+
+
 
 A highly customizable SeekBar library for Android.
 

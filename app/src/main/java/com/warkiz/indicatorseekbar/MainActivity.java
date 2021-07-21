@@ -1,89 +1,59 @@
 package com.warkiz.indicatorseekbar;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.widget.TextView;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.ImageView;
 
-import com.warkiz.indicatorseekbar.donation.BaseActivity;
-import com.warkiz.indicatorseekbar.donation.DonationFragment;
-import com.warkiz.indicatorseekbar.fragment.ContinuousFragment;
-import com.warkiz.indicatorseekbar.fragment.CustomFragment;
-import com.warkiz.indicatorseekbar.fragment.DiscreteFragment;
-import com.warkiz.indicatorseekbar.fragment.IndicatorFragment;
-import com.warkiz.indicatorseekbar.fragment.JavaBuildFragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.tabs.TabLayout;
+import com.warkiz.indicatorseekbar.adapter.FragmentAdapter;
 
-/**
- * created by zhuangguangquan on 2017/9/6
- */
-
-public class MainActivity extends BaseActivity {
-
-    private static String[] sType = new String[]{"continuous", "discrete", "custom", "java", "indicator", "donation"};
-    private List<Fragment> mFragmentList = new ArrayList<>();
+public class MainActivity extends AppCompatActivity {
 
     @Override
-    public int getLayoutResId() {
-        return R.layout.activity_main;
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-    @Override
-    protected void initCreate() {
-        super.initCreate();
-        initFragment();
         initViews();
     }
 
-    private void initFragment() {
-        mFragmentList.add(new ContinuousFragment());
-        mFragmentList.add(new DiscreteFragment());
-        mFragmentList.add(new CustomFragment());
-        mFragmentList.add(new JavaBuildFragment());
-        mFragmentList.add(new IndicatorFragment());
-        mFragmentList.add(new DonationFragment());
-    }
-
     private void initViews() {
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        ImageView sourceCode = findViewById(R.id.source_code);
 
-        viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
-        tabLayout.setupWithViewPager(viewPager);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        ViewPager2 viewPager2 = findViewById(R.id.viewPager2);
 
-        for (String s : sType) {
-            TextView textView = new TextView(this);
-            textView.setText(s);
-            tabLayout.newTab().setCustomView(textView);
-        }
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), getLifecycle(), tabLayout.getTabCount());
+        viewPager2.setAdapter(fragmentAdapter);
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                tabLayout.selectTab(tabLayout.getTabAt(position));
+            }
+        });
+
+        sourceCode.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/moisoni97/IndicatorSeekBar"))));
     }
-
-    private class PagerAdapter extends FragmentPagerAdapter {
-
-        public PagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return sType.length;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return sType[position];
-        }
-    }
-
-
 }

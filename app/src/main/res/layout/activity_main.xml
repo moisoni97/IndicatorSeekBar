@@ -5,39 +5,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:ignore="HardcodedText, ContentDescription">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/colorPrimaryDark">
 
-        <android.support.design.widget.TabLayout
+        <ImageView
+            android:id="@+id/source_code"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/octocat" />
+
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorPrimaryDark"
-            app:tabGravity="center"
-            app:tabMode="scrollable"
+            android:fadingEdgeLength="75dp"
+            android:requiresFadingEdge="horizontal"
+            app:tabGravity="start"
+            app:tabMode="auto"
             app:tabSelectedTextColor="#FF4081"
-            app:tabTextColor="#FFF" />
+            app:tabTextColor="#FFF">
 
-        <ImageView
-            android:visibility="gone"
-            android:id="@+id/buy_me_a_coffee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_more" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Continuous" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Discrete" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Custom" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Java" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Indicator" />
+
+        </com.google.android.material.tabs.TabLayout>
+
     </LinearLayout>
 
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scrollbars="none" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
 

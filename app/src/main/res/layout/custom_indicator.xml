@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.warkiz.indicatorseekbar.MainActivity">
+    tools:context="com.warkiz.indicatorseekbar.MainActivity"
+    tools:ignore="HardcodedText">
 
     <com.warkiz.widget.IndicatorStayLayout
         android:layout_width="match_parent"
@@ -35,8 +36,8 @@
             android:layout_height="wrap_content"
             app:isb_progress="75"
             app:isb_show_indicator="rectangle"
-            app:isb_show_tick_marks_type="divider"
-            app:isb_ticks_count="6" />
+            app:isb_show_tick_mark_type="divider"
+            app:isb_tick_count="6" />
 
         <TextView
             style="@style/subtitle_text_style"
@@ -48,10 +49,10 @@
             android:layout_height="wrap_content"
             app:isb_progress="75"
             app:isb_show_indicator="rectangle"
-            app:isb_show_tick_marks_type="divider"
-            app:isb_show_tick_texts="true"
-            app:isb_tick_texts_array="@array/tick_below_text_length_5"
-            app:isb_ticks_count="5" />
+            app:isb_show_tick_mark_type="divider"
+            app:isb_show_tick_text="true"
+            app:isb_tick_count="5"
+            app:isb_tick_text_array="@array/tick_below_text_length_5" />
 
         <TextView
             style="@style/subtitle_text_style"
@@ -64,8 +65,8 @@
             app:isb_indicator_content_layout="@layout/custom_indicator_oval"
             app:isb_progress="75"
             app:isb_show_indicator="custom"
-            app:isb_show_tick_marks_type="divider"
-            app:isb_ticks_count="6" />
+            app:isb_show_tick_mark_type="divider"
+            app:isb_tick_count="6" />
 
         <TextView
             style="@style/subtitle_text_style"
@@ -77,8 +78,8 @@
             app:isb_indicator_top_content_layout="@layout/custom_top_content_view_round"
             app:isb_progress="75"
             app:isb_show_indicator="rounded_rectangle"
-            app:isb_show_tick_marks_type="divider"
-            app:isb_ticks_count="6" />
+            app:isb_show_tick_mark_type="divider"
+            app:isb_tick_count="6" />
 
         <TextView
             style="@style/subtitle_text_style"
@@ -90,8 +91,8 @@
             app:isb_indicator_top_content_layout="@layout/custom_top_content_view_rect"
             app:isb_progress="75"
             app:isb_show_indicator="rectangle"
-            app:isb_show_tick_marks_type="divider"
-            app:isb_ticks_count="6" />
+            app:isb_show_tick_mark_type="divider"
+            app:isb_tick_count="6" />
 
         <include layout="@layout/source_code_link" />
     </com.warkiz.widget.IndicatorStayLayout>

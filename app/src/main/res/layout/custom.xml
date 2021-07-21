@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.warkiz.indicatorseekbar.MainActivity">
+    tools:context="com.warkiz.indicatorseekbar.MainActivity"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -17,46 +18,45 @@
 
         <TextView
             style="@style/subtitle_text_style"
-            android:text="1. tick_marks_color=@color/selector_tick_marks_color" />
+            android:text="1. tick_mark_color=@color/selector_tick_mark_color" />
 
         <com.warkiz.widget.IndicatorSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:isb_progress="62"
-            app:isb_show_tick_marks_type="oval"
-            app:isb_tick_marks_color="@color/selector_tick_marks_color"
-            app:isb_ticks_count="6" />
+            app:isb_show_tick_mark_type="oval"
+            app:isb_tick_mark_color="@color/selector_tick_mark_color"
+            app:isb_tick_count="6" />
 
 
         <TextView
             style="@style/subtitle_text_style"
-            android:text="2. tick_marks_drawable=@drawable/selector_tick_marks_drawable" />
+            android:text="2. tick_mark_drawable=@drawable/selector_tick_mark_drawable" />
 
         <com.warkiz.widget.IndicatorSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:isb_progress="45"
-            app:isb_tick_marks_drawable="@drawable/selector_tick_marks_drawable"
-            app:isb_tick_marks_size="15dp"
-            app:isb_ticks_count="6" />
-
+            app:isb_tick_mark_drawable="@drawable/selector_tick_mark_drawable"
+            app:isb_tick_mark_size="15dp"
+            app:isb_tick_count="6" />
 
         <TextView
             style="@style/subtitle_text_style"
-            android:text="3. tick_texts_color=@color/selector_tick_texts_2_color" />
+            android:text="3. tick_text_color=@color/selector_tick_text_2_color" />
 
         <com.warkiz.widget.IndicatorSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:isb_progress="45"
-            app:isb_show_tick_marks_type="divider"
-            app:isb_show_tick_texts="true"
-            app:isb_tick_texts_color="@color/selector_tick_texts_2_color_thumb"
-            app:isb_ticks_count="6" />
+            app:isb_show_tick_mark_type="divider"
+            app:isb_show_tick_text="true"
+            app:isb_tick_text_color="@color/selector_tick_text_2_color_thumb"
+            app:isb_tick_count="6" />
 
         <TextView
             style="@style/subtitle_text_style"
-            android:text="4. tick_texts_color=@color/selector_tick_texts_2_color \n seek_smoothly=true \n set_listener" />
+            android:text="4. tick_text_color=@color/selector_tick_text_2_color \n seek_smoothly=true \n set_listener" />
 
         <TextView
             android:id="@+id/states"
@@ -88,26 +88,26 @@
             android:layout_height="wrap_content"
             app:isb_progress="45"
             app:isb_seek_smoothly="true"
-            app:isb_show_tick_marks_type="divider"
-            app:isb_show_tick_texts="true"
+            app:isb_show_tick_mark_type="divider"
+            app:isb_show_tick_text="true"
             app:isb_thumb_drawable="@mipmap/ic_launcher_round"
-            app:isb_tick_marks_color="#FFFFFFFF"
-            app:isb_tick_texts_array="@array/tick_below_text_length_6"
-            app:isb_tick_texts_color="@color/selector_tick_texts_2_color"
-            app:isb_ticks_count="6" />
+            app:isb_tick_mark_color="#FFFFFFFF"
+            app:isb_tick_text_array="@array/tick_below_text_length_6"
+            app:isb_tick_text_color="@color/selector_tick_text_2_color"
+            app:isb_tick_count="6" />
 
         <TextView
             style="@style/subtitle_text_style"
-            android:text="5. tick_texts_color=@color/selector_tick_texts_3_color" />
+            android:text="5. tick_text_color=@color/selector_tick_text_3_color" />
 
         <com.warkiz.widget.IndicatorSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:isb_progress="76"
-            app:isb_show_tick_marks_type="divider"
-            app:isb_show_tick_texts="true"
-            app:isb_tick_texts_color="@color/selector_tick_texts_3_color"
-            app:isb_ticks_count="6" />
+            app:isb_show_tick_mark_type="divider"
+            app:isb_show_tick_text="true"
+            app:isb_tick_text_color="@color/selector_tick_text_3_color"
+            app:isb_tick_count="6" />
 
         <TextView
             style="@style/subtitle_text_style"
@@ -117,10 +117,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:isb_progress="20"
-            app:isb_show_tick_marks_type="divider"
+            app:isb_show_tick_mark_type="divider"
             app:isb_thumb_color="@color/selector_thumb_color"
-            app:isb_tick_marks_color="@color/color_gray"
-            app:isb_ticks_count="6" />
+            app:isb_tick_mark_color="@color/color_gray"
+            app:isb_tick_count="6" />
 
         <TextView
             style="@style/subtitle_text_style"
@@ -130,11 +130,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:isb_progress="20"
-            app:isb_show_tick_marks_type="divider"
+            app:isb_show_tick_mark_type="divider"
             app:isb_thumb_drawable="@drawable/selector_thumb_drawable"
             app:isb_thumb_size="18dp"
-            app:isb_tick_marks_color="#FFFFFFFF"
-            app:isb_ticks_count="6" />
+            app:isb_tick_mark_color="#FFFFFFFF"
+            app:isb_tick_count="6" />
 
         <TextView
             style="@style/subtitle_text_style"
@@ -144,11 +144,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:isb_progress="20"
-            app:isb_show_tick_marks_type="divider"
+            app:isb_show_tick_mark_type="divider"
             app:isb_thumb_drawable="@drawable/selector_thumb_ripple_drawable"
             app:isb_thumb_size="26dp"
-            app:isb_tick_marks_color="#FFFFFFFF"
-            app:isb_ticks_count="6" />
+            app:isb_tick_mark_color="#FFFFFFFF"
+            app:isb_tick_count="6" />
 
         <TextView
             style="@style/subtitle_text_style"
@@ -160,8 +160,8 @@
             app:isb_progress="20"
             app:isb_thumb_drawable="@drawable/thumb"
             app:isb_thumb_size="26dp"
-            app:isb_tick_marks_drawable="@drawable/tick_mark"
-            app:isb_ticks_count="6" />
+            app:isb_tick_mark_drawable="@drawable/tick_mark"
+            app:isb_tick_count="6" />
 
         <include layout="@layout/source_code_link" />
 

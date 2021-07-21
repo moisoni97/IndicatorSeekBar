@@ -1,13 +1,16 @@
-package com.warkiz.indicatorseekbar.fragment;
+package com.warkiz.indicatorseekbar.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.warkiz.indicatorseekbar.R;
 import com.warkiz.widget.IndicatorSeekBar;
@@ -15,9 +18,7 @@ import com.warkiz.widget.IndicatorStayLayout;
 import com.warkiz.widget.IndicatorType;
 import com.warkiz.widget.TickMarkType;
 
-/**
- * created by zhuangguangquan on  2017/9/6
- */
+import java.util.Objects;
 
 public class JavaBuildFragment extends BaseFragment {
 
@@ -26,17 +27,18 @@ public class JavaBuildFragment extends BaseFragment {
         return R.layout.java_build;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View root) {
         super.initView(root);
-        final LinearLayout content = (LinearLayout) root.findViewById(R.id.java_build);
+        final LinearLayout content = root.findViewById(R.id.java_build);
 
         TextView textView1 = getTextView();
         textView1.setText("1. continuous");
         content.addView(textView1);
-        //CONTINUOUS
+
         IndicatorSeekBar continuous = IndicatorSeekBar
-                .with(getContext())
+                .with(requireContext())
                 .max(200)
                 .min(10)
                 .progress(33)
@@ -56,21 +58,21 @@ public class JavaBuildFragment extends BaseFragment {
         content.addView(continuous);
 
         TextView textView2 = getTextView();
-        textView2.setText("2. continuous_texts_ends");
+        textView2.setText("2. continuous_text_ends");
         content.addView(textView2);
-        //CONTINUOUS_TEXTS_ENDS
-        IndicatorSeekBar continuous2TickTexts = IndicatorSeekBar
-                .with(getContext())
+
+        IndicatorSeekBar continuous2TickText = IndicatorSeekBar
+                .with(requireContext())
                 .max(100)
                 .min(10)
                 .progress(33)
                 .tickCount(2)
-                .showTickMarksType(TickMarkType.NONE)
-                .showTickTexts(true)
+                .showTickMarkType(TickMarkType.NONE)
+                .showTickText(true)
                 .indicatorColor(getResources().getColor(R.color.color_gray, null))
                 .indicatorTextColor(Color.parseColor("#ffffff"))
                 .showIndicatorType(IndicatorType.RECTANGLE)
-                .thumbDrawable(getResources().getDrawable(R.drawable.selector_thumb_drawable, null))
+                .thumbDrawable(Objects.requireNonNull(ResourcesCompat.getDrawable(getResources(), R.drawable.selector_thumb_drawable, null)))
                 .thumbSize(18)
                 .trackProgressColor(getResources().getColor(R.color.colorAccent, null))
                 .trackProgressSize(4)
@@ -79,46 +81,46 @@ public class JavaBuildFragment extends BaseFragment {
                 .build();
 
         IndicatorStayLayout continuousStayLayout = new IndicatorStayLayout(getContext());
-        continuousStayLayout.attachTo(continuous2TickTexts);
+        continuousStayLayout.attachTo(continuous2TickText);
         content.addView(continuousStayLayout);
 
         TextView textView22 = getTextView();
-        textView22.setText("3. continuous_texts_ends_custom_ripple_thumb");
+        textView22.setText("3. continuous_text_ends_custom_ripple_thumb");
         content.addView(textView22);
-        //CONTINUOUS_TEXTS_ENDS
-        IndicatorSeekBar continuous_texts_ends_custom_thumb = IndicatorSeekBar
-                .with(getContext())
+
+        IndicatorSeekBar continuous_text_ends_custom_thumb = IndicatorSeekBar
+                .with(requireContext())
                 .max(100)
                 .min(30)
                 .progress(33)
                 .tickCount(2)
-                .showTickMarksType(TickMarkType.NONE)
-                .showTickTexts(true)
+                .showTickMarkType(TickMarkType.NONE)
+                .showTickText(true)
                 .indicatorColor(getResources().getColor(R.color.color_blue, null))
                 .indicatorTextColor(Color.parseColor("#ffffff"))
                 .showIndicatorType(IndicatorType.CIRCULAR_BUBBLE)
-                .thumbDrawable(getResources().getDrawable(R./*mipmap.ic_launcher*/drawable.selector_thumb_ripple_drawable, null))
+                .thumbDrawable(Objects.requireNonNull(ResourcesCompat.getDrawable(getResources(), R.drawable.selector_thumb_ripple_drawable, null)))
                 .thumbSize(26)
                 .trackProgressColor(getResources().getColor(R.color.colorAccent, null))
                 .trackProgressSize(4)
                 .trackBackgroundColor(getResources().getColor(R.color.color_gray, null))
                 .trackBackgroundSize(2)
                 .build();
-        content.addView(continuous_texts_ends_custom_thumb);
+        content.addView(continuous_text_ends_custom_thumb);
 
         TextView textView3 = getTextView();
-        textView3.setText("4. continuous_texts_ends_custom");
+        textView3.setText("4. continuous_text_ends_custom");
         content.addView(textView3);
-        IndicatorSeekBar continuous2TickTexts1 = IndicatorSeekBar
-                .with(getContext())
+        IndicatorSeekBar continuous2TickText1 = IndicatorSeekBar
+                .with(requireContext())
                 .max(90)
                 .min(10)
                 .progress(33)
                 .tickCount(2)
-                .showTickMarksType(TickMarkType.NONE)
-                .showTickTexts(true)
-                .tickTextsArray(R.array.last_next_length_2)
-                .indicatorColor(getResources().getColor(R.color.color_blue))
+                .showTickMarkType(TickMarkType.NONE)
+                .showTickText(true)
+                .tickTextArray(R.array.last_next_length_2)
+                .indicatorColor(getResources().getColor(R.color.color_blue, null))
                 .indicatorTextColor(Color.parseColor("#ffffff"))
                 .showIndicatorType(IndicatorType.CIRCULAR_BUBBLE)
                 .thumbColor(Color.parseColor("#ff0000"))
@@ -128,21 +130,21 @@ public class JavaBuildFragment extends BaseFragment {
                 .trackBackgroundColor(getResources().getColor(R.color.color_gray, null))
                 .trackBackgroundSize(2)
                 .build();
-        content.addView(continuous2TickTexts1);
+        content.addView(continuous2TickText1);
 
         TextView textView4 = getTextView();
-        textView4.setText("5. discrete_ticks");
+        textView4.setText("5. discrete_tick");
         content.addView(textView4);
-        //DISCRETE_TICKS
-        IndicatorSeekBar discrete_ticks = IndicatorSeekBar
-                .with(getContext())
+
+        IndicatorSeekBar discrete_tick = IndicatorSeekBar
+                .with(requireContext())
                 .max(50)
                 .min(10)
                 .progress(33)
                 .tickCount(7)
-                .tickMarksSize(15)
-                .tickMarksDrawable(getResources().getDrawable(R.drawable.selector_tick_marks_drawable, null))
-                .indicatorColor(getResources().getColor(R.color.color_blue))
+                .tickMarkSize(15)
+                .tickMarkDrawable(Objects.requireNonNull(ResourcesCompat.getDrawable(getResources(), R.drawable.selector_tick_mark_drawable, null)))
+                .indicatorColor(getResources().getColor(R.color.color_blue, null))
                 .indicatorTextColor(Color.parseColor("#ffffff"))
                 .showIndicatorType(IndicatorType.ROUNDED_RECTANGLE)
                 .thumbColor(Color.parseColor("#ff0000"))
@@ -153,53 +155,53 @@ public class JavaBuildFragment extends BaseFragment {
                 .trackBackgroundSize(2)
                 .build();
         IndicatorStayLayout indicatorStayLayout = new IndicatorStayLayout(getContext());
-        indicatorStayLayout.attachTo(discrete_ticks);
+        indicatorStayLayout.attachTo(discrete_tick);
         content.addView(indicatorStayLayout);
 
         TextView textView5 = getTextView();
-        textView5.setText("6. discrete_ticks_texts");
+        textView5.setText("6. discrete_tick_text");
         content.addView(textView5);
-        //DISCRETE_TICKS_TEXTS
-        IndicatorSeekBar discrete_ticks_texts = IndicatorSeekBar
-                .with(getContext())
+
+        IndicatorSeekBar discrete_tick_text = IndicatorSeekBar
+                .with(requireContext())
                 .max(110)
                 .min(10)
                 .progress(53)
                 .tickCount(7)
-                .showTickMarksType(TickMarkType.OVAL)
-                .tickMarksColor(getResources().getColor(R.color.color_blue, null))
-                .tickMarksSize(13)//dp
-                .showTickTexts(true)
-                .tickTextsColor(getResources().getColor(R.color.color_pink, null))
-                .tickTextsSize(13)//sp
-                .tickTextsTypeFace(Typeface.MONOSPACE)
+                .showTickMarkType(TickMarkType.OVAL)
+                .tickMarkColor(getResources().getColor(R.color.color_blue, null))
+                .tickMarkSize(13)
+                .showTickText(true)
+                .tickTextColor(getResources().getColor(R.color.color_pink, null))
+                .tickTextSize(13)
+                .tickTextTypeFace(Typeface.MONOSPACE)
                 .showIndicatorType(IndicatorType.ROUNDED_RECTANGLE)
                 .indicatorColor(getResources().getColor(R.color.color_blue, null))
                 .indicatorTextColor(Color.parseColor("#ffffff"))
-                .indicatorTextSize(13)//sp
+                .indicatorTextSize(13)
                 .thumbColor(getResources().getColor(R.color.colorAccent, null))
-                .thumbSize(14)//dp
+                .thumbSize(14)
                 .trackProgressColor(getResources().getColor(R.color.colorAccent, null))
-                .trackProgressSize(4)//dp
+                .trackProgressSize(4)
                 .trackBackgroundColor(getResources().getColor(R.color.color_gray, null))
-                .trackBackgroundSize(2)//dp
+                .trackBackgroundSize(2)
                 .build();
-        content.addView(discrete_ticks_texts);
+        content.addView(discrete_tick_text);
 
         TextView textView6 = getTextView();
-        textView6.setText("7. discrete_ticks_texts_custom");
+        textView6.setText("7. discrete_tick_text_custom");
         content.addView(textView6);
         String[] array = {"A", "B", "C", "D", "E", "F", "G"};
-        IndicatorSeekBar discrete_ticks_texts1 = IndicatorSeekBar
-                .with(getContext())
+        IndicatorSeekBar discrete_tick_text1 = IndicatorSeekBar
+                .with(requireContext())
                 .max(200)
                 .min(10)
                 .progress(83)
                 .tickCount(7)
-                .showTickMarksType(TickMarkType.SQUARE)
-                .tickTextsArray(array)
-                .showTickTexts(true)
-                .tickTextsColorStateList(getResources().getColorStateList(R.color.selector_tick_texts_3_color, null))
+                .showTickMarkType(TickMarkType.SQUARE)
+                .tickTextArray(array)
+                .showTickText(true)
+                .tickTextColorStateList(getResources().getColorStateList(R.color.selector_tick_text_3_color, null))
                 .indicatorColor(getResources().getColor(R.color.color_blue, null))
                 .indicatorTextColor(Color.parseColor("#ffffff"))
                 .showIndicatorType(IndicatorType.RECTANGLE)
@@ -210,25 +212,25 @@ public class JavaBuildFragment extends BaseFragment {
                 .trackBackgroundColor(getResources().getColor(R.color.color_gray, null))
                 .trackBackgroundSize(2)
                 .build();
-        content.addView(discrete_ticks_texts1);
+        content.addView(discrete_tick_text1);
 
         TextView textView7 = getTextView();
-        textView7.setText("8. discrete_ticks_texts_ends");
+        textView7.setText("8. discrete_tick_text_ends");
         content.addView(textView7);
 
         String[] array_ends = {"A", "", "", "", "", "", "G"};
-        IndicatorSeekBar discrete_ticks_texts_ends = IndicatorSeekBar
-                .with(getContext())
+        IndicatorSeekBar discrete_tick_text_ends = IndicatorSeekBar
+                .with(requireContext())
                 .max(100)
                 .min(10)
                 .progress(83)
                 .tickCount(7)
-                .showTickMarksType(TickMarkType.OVAL)
-                .tickMarksColor(getResources().getColorStateList(R.color.selector_tick_marks_color, null))
-                .tickTextsArray(array_ends)
-                .showTickTexts(true)
+                .showTickMarkType(TickMarkType.OVAL)
+                .tickMarkColor(getResources().getColorStateList(R.color.selector_tick_mark_color, null))
+                .tickTextArray(array_ends)
+                .showTickText(true)
                 .showIndicatorType(IndicatorType.CIRCULAR_BUBBLE)
-                .tickTextsColorStateList(getResources().getColorStateList(R.color.selector_tick_texts_3_color, null))
+                .tickTextColorStateList(getResources().getColorStateList(R.color.selector_tick_text_3_color, null))
                 .indicatorColor(getResources().getColor(R.color.color_blue, null))
                 .indicatorTextColor(Color.parseColor("#ffffff"))
                 .thumbColor(Color.parseColor("#ff0000"))
@@ -240,7 +242,7 @@ public class JavaBuildFragment extends BaseFragment {
                 .build();
 
         IndicatorStayLayout stayLayout = new IndicatorStayLayout(getContext());
-        stayLayout.attachTo(discrete_ticks_texts_ends);
+        stayLayout.attachTo(discrete_tick_text_ends);
         content.addView(stayLayout);
 
         TextView textView8 = getTextView();
@@ -250,7 +252,7 @@ public class JavaBuildFragment extends BaseFragment {
     @NonNull
     private TextView getTextView() {
         TextView textView = new TextView(getContext());
-        int padding = dp2px(getContext(), 16);
+        int padding = dp2px(requireContext(), 16);
         textView.setPadding(padding, padding, padding, 0);
         return textView;
     }
@@ -258,5 +260,4 @@ public class JavaBuildFragment extends BaseFragment {
     public int dp2px(Context context, float dpValue) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, context.getResources().getDisplayMetrics());
     }
-
 }

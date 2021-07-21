@@ -4,18 +4,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
 
-/**
- * <p>
- * https://github.com/warkiz/IndicatorSeekBar
- * <p>
- * Donation/打赏:
- * If this library is helpful to you ,you can give me a donation by:
- *
- * @see <a href="https://www.paypal.me/BuyMeACupOfTeaThx">ZhuanGuangQuan's Paypal</a>, or
- * @see <a href="https://github.com/warkiz/IndicatorSeekBar/blob/master/app/src/main/res/mipmap-xxhdpi/wechat_pay.png?raw=true">微信支付</a>, or
- * @see <a href="https://github.com/warkiz/IndicatorSeekBar/blob/master/app/src/main/res/mipmap-xxhdpi/alipay.png?raw=true">支付宝</a>
- * <p>
- */
 class FormatUtils {
 
     private final static char[][] LEADING_DECIMALS = new char[][]{
@@ -29,13 +17,10 @@ class FormatUtils {
             "0.000000000000000".toCharArray()
     };
 
-    /**
-     * format a double value quickly, will remove the suffix:0
-     */
     static String fastFormat(double d, int precision) {
         int posPrecision = Math.abs(precision);
         double roundUpVal = Math.abs(d) * Math.pow(10d, posPrecision) + 0.5d;
-        if (roundUpVal > 999999999999999d || posPrecision > 16) {// double has max 16 precisions
+        if (roundUpVal > 999999999999999d || posPrecision > 16) {
             return bigDecFormat(d, posPrecision);
         }
         long longPart = (long) Math.nextUp(roundUpVal);
@@ -44,8 +29,8 @@ class FormatUtils {
         }
         char[] longPartChars = Long.toString(longPart).toCharArray();
         char[] formatChars;
+        int end = longPartChars.length - 1;
         if (longPartChars.length > posPrecision) {
-            int end = longPartChars.length - 1;
             int decIndex = longPartChars.length - posPrecision;
             while (end >= decIndex && longPartChars[end] == '0') {
                 end--;
@@ -61,13 +46,12 @@ class FormatUtils {
                 System.arraycopy(longPartChars, 0, formatChars, 0, decIndex);
             }
         } else {
-            int end = longPartChars.length - 1;
             while (end >= 0 && longPartChars[end] == '0') {
                 end--;
             }
-            char[] leadings = LEADING_DECIMALS[posPrecision - longPartChars.length];
-            formatChars = Arrays.copyOf(leadings, leadings.length + end + 1);
-            System.arraycopy(longPartChars, 0, formatChars, leadings.length, end + 1);
+            char[] leading = LEADING_DECIMALS[posPrecision - longPartChars.length];
+            formatChars = Arrays.copyOf(leading, leading.length + end + 1);
+            System.arraycopy(longPartChars, 0, formatChars, leading.length, end + 1);
         }
         return Math.signum(d) > 0 ? new String(formatChars) : "-" + new String(formatChars);
     }
@@ -88,5 +72,4 @@ class FormatUtils {
         }
         return formatStr;
     }
-
 }

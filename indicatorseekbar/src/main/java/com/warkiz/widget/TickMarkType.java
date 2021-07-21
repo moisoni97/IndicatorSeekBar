@@ -1,24 +1,20 @@
 package com.warkiz.widget;
 
-/**
- * created by zhuangguangquan on 2017/9/11
- */
-
 public interface TickMarkType {
     /**
-     * don't show the tickMarks
+     * Tick mark is GONE
      */
     int NONE = 0;
     /**
-     * show tickMarks shape as regular oval
+     * Tick mark shape as regular oval
      */
     int OVAL = 1;
     /**
-     * show tickMarks shape as regular square
+     * Tick mark shape as regular square
      */
     int SQUARE = 2;
     /**
-     * show tickMarks shape as vertical line , line'size is 2 dp.
+     * Tick mark shape as vertical line (2dp size)
      */
     int DIVIDER = 3;
 }

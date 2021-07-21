@@ -1,27 +1,14 @@
 package com.warkiz.widget;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-/**
- * created by zhuangguangquan on 2018/5/27
- * <p>
- * the container for IndicatorSeekBar to make the indicator stay always
- * <p>
- * https://github.com/warkiz/IndicatorSeekBar
- * <p>
- * Donation/打赏:
- * If this library is helpful to you ,you can give me a donation by:
- *
- * @see <a href="https://www.paypal.me/BuyMeACupOfTeaThx">ZhuanGuangQuan's Paypal</a>, or
- * @see <a href="https://github.com/warkiz/IndicatorSeekBar/blob/master/app/src/main/res/mipmap-xxhdpi/wechat_pay.png?raw=true">微信支付</a>, or
- * @see <a href="https://github.com/warkiz/IndicatorSeekBar/blob/master/app/src/main/res/mipmap-xxhdpi/alipay.png?raw=true">支付宝</a>
- * <p>
- */
 public class IndicatorStayLayout extends LinearLayout {
 
     public IndicatorStayLayout(Context context) {
@@ -47,49 +34,43 @@ public class IndicatorStayLayout extends LinearLayout {
     }
 
     /**
-     * If you want to initial seek bar by java code to make
-     * indicator stay always,call this.
+     * To make indicator stay always by Java code
      *
-     * @param seekBar the direct child in indicatorStayLayout
+     * @param seekBar the direct child in IndicatorStayLayout
      */
     public void attachTo(IndicatorSeekBar seekBar) {
         attachTo(seekBar, -2);
     }
 
     /**
-     * If you want to initial seek bar by java code to make
-     * indicator stay always,call this.
+     * To make indicator stay always by Java code
      *
-     * @param seekBar the direct child in indicatorStayLayout
-     * @param index   the child index you wanted indicatorSeekBar to attach to IndicatorStayLayout;
+     * @param seekBar the direct child in IndicatorStayLayout
+     * @param index   the child index of IndicatorSeekBar attached to IndicatorStayLayout
      */
     public void attachTo(IndicatorSeekBar seekBar, int index) {
         if (seekBar == null) {
-            throw new NullPointerException("the seek bar wanna attach to IndicatorStayLayout " +
-                    "can not be null value.");
+            throw new NullPointerException("The IndicatorSeekBar attached to IndicatorStayLayout can not be null");
         }
+
         layoutIndicator(seekBar, index);
         addView(seekBar, index + 1);
     }
 
-    /**
-     * layout each indicator
-     *
-     * @param child the indicatorSeekBar which should hava a indicator content view.
-     * @param index the index you want the seek bar to located in IndicatorStayLayout.
-     */
     private void layoutIndicator(View child, int index) {
         if (child instanceof IndicatorSeekBar) {
             IndicatorSeekBar seekBar = (IndicatorSeekBar) child;
-            seekBar.setIndicatorStayAlways(true);
+            seekBar.setIndicatorStayAlways();
             View contentView = seekBar.getIndicatorContentView();
             if (contentView == null) {
-                throw new IllegalStateException("Can not find any indicator in the IndicatorSeekBar, please " +
-                        "make sure you have called the attr: SHOW_INDICATOR_TYPE for IndicatorSeekBar and the value is not IndicatorType.NONE.");
+                throw new IllegalStateException("Can not find any indicator in IndicatorSeekBar. " +
+                        "Please make sure you have called the attr: SHOW_INDICATOR_TYPE for IndicatorSeekBar and the value is not IndicatorType.NONE");
             }
+
             if (contentView instanceof IndicatorSeekBar) {
-                throw new IllegalStateException("IndicatorSeekBar can not be a contentView for Indicator in case this inflating loop.");
+                throw new IllegalStateException("IndicatorContentView can not be an instance of IndicatorSeekBar");
             }
+
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -104,10 +85,8 @@ public class IndicatorStayLayout extends LinearLayout {
     @Override
     public void setOrientation(int orientation) {
         if (orientation != VERTICAL) {
-            throw new IllegalArgumentException("IndicatorStayLayout is always vertical and does"
-                    + " not support horizontal orientation");
+            throw new IllegalArgumentException("IndicatorStayLayout is always vertical and doesn't support horizontal orientation");
         }
         super.setOrientation(orientation);
     }
-
 }
